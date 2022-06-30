@@ -1,0 +1,19 @@
+version: "3.5"
+
+services:
+  app:
+    tty: true
+    stdin_open: true
+    network_mode: host
+    image: node:$NODE_VERSION
+    working_dir: /app
+    command: make startup
+    ports:
+      - 3000:3000
+    volumes:
+      - user-home:/root
+      - ./:/app:cached
+      - ./node_modules:/app/node_modules:delegated
+
+volumes:
+  user-home:
