@@ -9,6 +9,18 @@ const store = createStore({});
 // must be a Vuex thing
 log(`Vuex state: [isRef=${isRef(store.state)}]`, store.state);
 
-export default defineNuxtPlugin(function () {
-  log('plugin')
+export default defineNuxtPlugin({
+  setup() {
+    log('plugin');
+  },
+  hooks: {
+    ...Object.fromEntries([
+      'page:start',
+      'page:finish',
+      'app:rendered',
+      'afterResponse',
+    ].map((name) => [name, () => {
+      log('[plugin hooks]:', name);
+    }])),
+  },
 });
